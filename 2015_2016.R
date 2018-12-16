@@ -34,5 +34,22 @@ df %>%
 # right hand plot should contain a boxplot of the number of reviews for the books
 # published published prior to 2014. Label axes, include titles and use colour. Ensure
 # the limits of the y axes match in the two plots. Comment on the resulting plots.
+df1<-df[df$PublicationYear==2014,]
+df2<-df[df$PublicationYear<2014,]
 
+par(mfrow = c(1,2))
+boxplot(NumReviews~PublicationYear,data=df1,xlab = "Year",ylab="reviews",main="Reviews in 2014",col="green")
+boxplot(NumReviews~PublicationYear,data = df2,xlab = "Year",ylab="reviews",main="Reviews in 2014",col="green")
 
+#interpreting box plots
+
+#t.test
+t.test(x=df$Price[df$Genre == "ChildrensBooks"],y=df$Price[df$Genre == "ContemporaryFiction"])
+
+#explanation
+# Based on the result, you can say: at 95% confidence level, there is no significant
+# difference (p-value = 0.0794) of the two means. Here you should accept the null hypothesis
+# that the two means are equal because the p-value is larger than 0.05. The maximum difference
+# of the mean can be as low as -3.37 and as high as 0.21. The output also produces estimates
+# of the sample means, the mean and the degree of freedom of the t-distribution.
+# Note that Welch’s t-test is a t-test with unequal variances.
