@@ -43,7 +43,7 @@ plot(wines)
 #2.b
 
 #Linear Regression
-model <- lm(Tasting ~ View,data = wines)
+model1 <- lm(Tasting ~ View,data = wines)
 
 #Polynomial Regression (Quadratic regression)
 #method 1
@@ -52,6 +52,15 @@ model2 <- lm(Tasting ~ View+ I(View^2),data = wines)
 #method 2
 model3 <- lm(Tasting ~ poly(View, degree = 2,raw = T),data = wines)
 
-#summary of the model
-summary(model3)
+#summary of the models
+summary(model1)
+summary(model2)
+
+#the polynomial regression model is better since it has a smaller residual standard error and a
+#higher adjusted R-squared which show the variance presented by the polynomial term View^2.
+#It has also a lower RSE
+#Also P-values of the ploynomial terms shows the statistical significance of the terms as
+#the null hypothesis is rejected
+
+
 
