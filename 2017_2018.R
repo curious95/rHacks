@@ -62,5 +62,11 @@ summary(model2)
 #Also P-values of the ploynomial terms shows the statistical significance of the terms as
 #the null hypothesis is rejected
 
-
+# 2.c
+# plot of the two models
+par(mfrow=c(1,2))
+plot(wines$Tasting,wines$View,main = "eqn1")
+abline(model1,lwd=3,col="red")
+plot(wines$Tasting,wines$View,main = "eqn2")
+lines(smooth.spline(wines$View,predict(model2)),col="blue",lwd=3)
 
