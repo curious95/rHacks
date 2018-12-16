@@ -70,3 +70,8 @@ abline(model1,lwd=3,col="red")
 plot(wines$Tasting,wines$View,main = "eqn2")
 lines(smooth.spline(wines$View,predict(model2)),col="blue",lwd=3)
 
+#note the title and the equations can be formed from the model summary
+
+
+#PART B
+#please refer the assingment solution
