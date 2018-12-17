@@ -8,7 +8,7 @@ df<- read.csv("Data/AmazonBestSellers2014(1)(13).csv")
 sprintf(nrow(df[df$PublicationYear==2014,])/nrow(df),fmt = "%#.2f")
 #sprintf(22.2034,fmt = "%#.2f")
 
-df[df$PublicationYear==2014 & df$Publisher=="Penguin",]
+
 
 #b
 # Use the aggregate function to compute the average number of reviews, review rating
@@ -118,4 +118,35 @@ summary(model3)
 # lines(PY,col="green")
 # lines(Y,col="red")
 # cor(Y,PY)
+
+
+
+#Binning attribute tenure
+# tdata <- mutate(tdata, tenure_bin = tenure)
+# 
+# tdata$tenure_bin[tdata$tenure_bin >=0 & tdata$tenure_bin <= 12] <- '0-1 year'
+# tdata$tenure_bin[tdata$tenure_bin > 12 & tdata$tenure_bin <= 24] <- '1-2 years'
+# tdata$tenure_bin[tdata$tenure_bin > 24 & tdata$tenure_bin <= 36] <- '2-3 years'
+# tdata$tenure_bin[tdata$tenure_bin > 36 & tdata$tenure_bin <= 48] <- '3-4 years'
+# tdata$tenure_bin[tdata$tenure_bin > 48 & tdata$tenure_bin <= 60] <- '4-5 years'
+# tdata$tenure_bin[tdata$tenure_bin > 60 & tdata$tenure_bin <= 72] <- '5-6 years'
+
+#tdata$tenure_bin <- as.factor(tdata$tenure_bin)
+
+#summary(m1 <- glm(num_awards ~ prog + math, family="poisson", data=p))
+
+
+
+
+
+
+#PART 2
+
+df3 <- read.csv("Data/FroudShips1907(1)(13).csv") 
+df3 <-df3[df3$Power == "Sail" | df3$Power == "Steam",]
+
+model1 <- glm(formula = CrewSize ~ Power+LogTonnage,data = df3,family = "poisson")
+model1$coefficients
+
+predict(model1,df3[10:15,])
 
