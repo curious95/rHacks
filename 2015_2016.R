@@ -150,3 +150,10 @@ model1$coefficients
 
 predict(model1,df3[10:15,])
 
+
+
+#PART 3 profiling
+# Rprof(tmp <- tempfile())
+# example(glm)
+# Rprof()
+# summaryRprof(tmp)
