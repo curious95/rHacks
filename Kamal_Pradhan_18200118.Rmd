@@ -1,0 +1,133 @@
+---
+title: "STAT40620_FINAL_EXAM"
+author: "Kamal Pradhan"
+date: "17/12/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+##(a) Loading the data
+```{r loadData}
+load("goodreads.RData")
+```
+
+###Total reviews in the dataset
+```{r totalReviews}
+cat("Total reviews in the dataset",dim(goodreads)[1])
+dim(goodreads)[1]
+```
+
+###Total Unique users
+```{r uniqueUsers}
+cat("Total different users in the dataset",length(unique(goodreads$user_id)))
+length(unique(goodreads$user_id))
+```
+
+
+##(b) Book Authors and Book Review
+###Total book authors in the dataset
+```{r totalAuthors}
+cat("Total book authors in the dataset",length(unique(goodreads$authors)))
+```
+
+###Most reviewed book
+```{r mostReviewed}
+freqTable<-as.data.frame(table(goodreads$title))
+bookName <- freqTable$Var1[which.max(freqTable$Freq)]
+#Most reviewed book
+print(bookName)
+```
+
+##(c) Average ratings and others
+###Average rating per book
+```{r avgRatingbook}
+avgRatings<-aggregate(x = goodreads$rating,by = list(goodreads$title),FUN =mean)
+colnames(avgRatings)<-c("BooK Title","Average Rating")
+head(avgRatings)
+```
+
+###Average rating per book = 5
+```{r avgRatingbook_5}
+cat("book with average ratings 5 = ",nrow(avgRatings[avgRatings$`Average Rating`==5,]))
+```
+
+###Average rating per book > 4
+```{r avgRatingbook_4}
+cat("book with average ratings > 4 = ",nrow(avgRatings[avgRatings$`Average Rating`>4.0,]))
+```
+
+###reviewed  > 10000 times and rating > 4.0
+```{r review_rating_1000}
+df2<-freqTable[freqTable$Freq>10000,]
+df3<-avgRatings[avgRatings$`Average Rating`>4.0,]
+df4<-merge(x = df2, y = df3, by.x = "Var1", by.y = "BooK Title")
+cat("book with average ratings > 4  and reviewed atleast 10000 times = ",nrow(df4))
+```
+
+##(d) Summarise
+###Average rating per book
+```{r summaryMethod}
+class(goodreads) <- c("bookratings", "data.frame")
+summary.bookratings <- function(x){
+ 
+  cat("Top 10 average rated authors")
+
+  tempdf<-aggregate(x = x$rating,by = list(x$authors),FUN =mean)
+  tempdf<-tempdf[order(-tempdf$x),]
+  tdf<-head(tempdf$`Group.1`,10)
+  
+  print(tdf)
+  
+  cat("Top 10 average rated books reviewed atleast 10000 times")
+  freqTable2<-as.data.frame(table(x$title))
+  freqTable2<-freqTable2[freqTable2$Freq>10000,]
+  avgRatings2<-aggregate(x = x$rating,by = list(x$title),FUN =mean)
+  colnames(avgRatings2)<-c("BooK Title","Average Rating")
+  df2<-merge(x = freqTable2, y = avgRatings2, by.x = "Var1", by.y = "BooK Title")
+  df2<-df2[order(-df2$`Average Rating`),]
+  ttdf<-head(df2$Var1,10)
+  
+  print(ttdf)
+
+}
+
+summary(goodreads)
+
+cat("Top three titles are Harry Potter and the Deathly Hallows (Harry Potter, #7),     
+ Harry Potter and the Half-Blood Prince (Harry Potter, #6),   
+ Harry Potter and the Goblet of Fire (Harry Potter, #4)")
+
+cat("Top three authors are J.K. Rowling, Kathryn Stockett, Harper Lee")
+```
+
+
+
+# Question 2
+
+##(a)
+
+###ii Logitstic regression
+```{r logitReg}
+turtle<-read.csv("turtle.csv")
+
+logitIt<-function(X,Y){
+
+  model <- glm(X ~Y,family=binomial(link='logit'))
+  fitted.results.cat <- ifelse(model$fitted.values > 0.5,"0","1")
+  model$aic
+
+}
+
+logitIt(turtle$gender,turtle$length)
+logitIt(turtle$gender,turtle$height)
+logitIt(turtle$gender,turtle$width)
+
+#length performs better
+
+
+```
