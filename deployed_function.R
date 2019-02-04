@@ -7,6 +7,14 @@ function(msg=""){
   list(msg = paste0("The message is: '", msg, "'"))
 }
 
+#* Echo back the input
+#* @param msg The message to echo
+#* @get /
+function(msg=""){
+  list(status = "SUCCESS", code = "200")
+  
+}
+
 
 #* Return the sum of two numbers
 #* @param a The first number to add
