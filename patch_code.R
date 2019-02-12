@@ -3,3 +3,6 @@ if(nrow(turtle)==0){
 }else{
   print(turtle$width[nrow(turtle)])
 }
+
+#EV.EBIT
+#EV.Sales
